@@ -13,6 +13,7 @@ SecondWindow::SecondWindow(QWidget *parent) :
     ui->label_Asterisco1->setVisible(false);
     ui->label_Asterisco2->setVisible(false);
     ui->label_Asterisco3->setVisible(false);
+    ui->label_Asterisco4->setVisible(false);
 }
 
 SecondWindow::~SecondWindow()
@@ -26,7 +27,8 @@ void SecondWindow::on_pushButton_Confirmar_clicked()
     QString estadoIni = ui->lineEdit_Est_Ini->text();
     QString estadoFin = ui->lineEdit_Est_Fin->text();
     QString transiciones = ui->lineEdit_Trans->text();
-    ui->textBrowser_Mostrar->setText(estadoIni+"\n"+estadoFin+"\n"+transiciones);
+    QString palabraEnt = ui->lineEdit_Pal_Ent->text();
+    ui->textBrowser_Mostrar->setText(estadoIni+"\n"+estadoFin+"\n"+transiciones+"\n"+palabraEnt);
 
     // VALIDACIONES
     bool validaIni = maq->validaEstado(estadoIni);
@@ -34,18 +36,31 @@ void SecondWindow::on_pushButton_Confirmar_clicked()
     //bool validaTrans = maq->validaEstado(transiciones);
     if(!validaIni){
         ui->label_Asterisco1->setVisible(true);
+        ui->lineEdit_Est_Ini->setStyleSheet("border: 1px solid red");
     }else{
         ui->label_Asterisco1->setVisible(false);
+        ui->lineEdit_Est_Ini->setStyleSheet(styleSheet());
     }
     if(!validaFin){
         ui->label_Asterisco2->setVisible(true);
+        ui->lineEdit_Est_Fin->setStyleSheet("border: 1px solid red");
     }else{
         ui->label_Asterisco2->setVisible(false);
+        ui->lineEdit_Est_Fin->setStyleSheet(styleSheet());
     }
     if(transiciones == ""){
         ui->label_Asterisco3->setVisible(true);
+        ui->lineEdit_Trans->setStyleSheet("border: 1px solid red");
     }else{
         ui->label_Asterisco3->setVisible(false);
+        ui->lineEdit_Trans->setStyleSheet(styleSheet());
+    }
+    if(palabraEnt == ""){
+        ui->label_Asterisco4->setVisible(true);
+        ui->lineEdit_Pal_Ent->setStyleSheet("border: 1px solid red");
+    }else{
+        ui->label_Asterisco4->setVisible(false);
+        ui->lineEdit_Pal_Ent->setStyleSheet(styleSheet());
     }
 
 }

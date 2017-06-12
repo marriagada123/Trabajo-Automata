@@ -34,11 +34,12 @@ public:
     QPushButton *pushButton_Confirmar;
     QTextBrowser *textBrowser_Mostrar;
     QWidget *widget;
-    QHBoxLayout *horizontalLayout_4;
+    QHBoxLayout *horizontalLayout_5;
     QVBoxLayout *verticalLayout;
     QLabel *label_Est_Ini;
     QLabel *label_Est_Fin;
     QLabel *label_Trans;
+    QLabel *label_Pal_Ent;
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout;
     QLineEdit *lineEdit_Est_Ini;
@@ -49,6 +50,9 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QLineEdit *lineEdit_Trans;
     QLabel *label_Asterisco3;
+    QHBoxLayout *horizontalLayout_4;
+    QLineEdit *lineEdit_Pal_Ent;
+    QLabel *label_Asterisco4;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -56,21 +60,21 @@ public:
     {
         if (SecondWindow->objectName().isEmpty())
             SecondWindow->setObjectName(QStringLiteral("SecondWindow"));
-        SecondWindow->resize(371, 316);
+        SecondWindow->resize(371, 372);
         centralwidget = new QWidget(SecondWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         pushButton_Confirmar = new QPushButton(centralwidget);
         pushButton_Confirmar->setObjectName(QStringLiteral("pushButton_Confirmar"));
-        pushButton_Confirmar->setGeometry(QRect(250, 130, 75, 23));
+        pushButton_Confirmar->setGeometry(QRect(250, 180, 75, 23));
         textBrowser_Mostrar = new QTextBrowser(centralwidget);
         textBrowser_Mostrar->setObjectName(QStringLiteral("textBrowser_Mostrar"));
-        textBrowser_Mostrar->setGeometry(QRect(70, 180, 251, 81));
+        textBrowser_Mostrar->setGeometry(QRect(70, 230, 251, 81));
         widget = new QWidget(centralwidget);
         widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(56, 42, 276, 82));
-        horizontalLayout_4 = new QHBoxLayout(widget);
-        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
-        horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
+        widget->setGeometry(QRect(50, 44, 295, 110));
+        horizontalLayout_5 = new QHBoxLayout(widget);
+        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
+        horizontalLayout_5->setContentsMargins(0, 0, 0, 0);
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         label_Est_Ini = new QLabel(widget);
@@ -88,8 +92,13 @@ public:
 
         verticalLayout->addWidget(label_Trans);
 
+        label_Pal_Ent = new QLabel(widget);
+        label_Pal_Ent->setObjectName(QStringLiteral("label_Pal_Ent"));
 
-        horizontalLayout_4->addLayout(verticalLayout);
+        verticalLayout->addWidget(label_Pal_Ent);
+
+
+        horizontalLayout_5->addLayout(verticalLayout);
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
@@ -150,8 +159,26 @@ public:
 
         verticalLayout_2->addLayout(horizontalLayout_3);
 
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        lineEdit_Pal_Ent = new QLineEdit(widget);
+        lineEdit_Pal_Ent->setObjectName(QStringLiteral("lineEdit_Pal_Ent"));
+        lineEdit_Pal_Ent->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        horizontalLayout_4->addLayout(verticalLayout_2);
+        horizontalLayout_4->addWidget(lineEdit_Pal_Ent);
+
+        label_Asterisco4 = new QLabel(widget);
+        label_Asterisco4->setObjectName(QStringLiteral("label_Asterisco4"));
+        label_Asterisco4->setStyleSheet(QStringLiteral("color: rgb(255, 0, 0);"));
+        label_Asterisco4->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_4->addWidget(label_Asterisco4);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_4);
+
+
+        horizontalLayout_5->addLayout(verticalLayout_2);
 
         SecondWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(SecondWindow);
@@ -174,9 +201,11 @@ public:
         label_Est_Ini->setText(QApplication::translate("SecondWindow", "Ingrese estado inicial:", Q_NULLPTR));
         label_Est_Fin->setText(QApplication::translate("SecondWindow", "Ingrese estado final:", Q_NULLPTR));
         label_Trans->setText(QApplication::translate("SecondWindow", "Ingrese las transiciones:", Q_NULLPTR));
+        label_Pal_Ent->setText(QApplication::translate("SecondWindow", "Ingrese palabra de entrada:", Q_NULLPTR));
         label_Asterisco1->setText(QApplication::translate("SecondWindow", "*", Q_NULLPTR));
         label_Asterisco2->setText(QApplication::translate("SecondWindow", "*", Q_NULLPTR));
         label_Asterisco3->setText(QApplication::translate("SecondWindow", "*", Q_NULLPTR));
+        label_Asterisco4->setText(QApplication::translate("SecondWindow", "*", Q_NULLPTR));
     } // retranslateUi
 
 };
