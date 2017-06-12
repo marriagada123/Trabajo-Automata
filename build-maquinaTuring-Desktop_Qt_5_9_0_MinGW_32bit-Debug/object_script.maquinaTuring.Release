@@ -1,0 +1,14 @@
+INPUT(
+./release/main.o
+./release/mainwindow.o
+./release/maqturing.o
+./release/secondwindow.o
+./release/dialog.o
+./release/prueba.o
+./release/dialog2.o
+./release/moc_mainwindow.o
+./release/moc_secondwindow.o
+./release/moc_dialog.o
+./release/moc_prueba.o
+./release/moc_dialog2.o
+);
