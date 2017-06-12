@@ -2,6 +2,9 @@
 #include "ui_secondwindow.h"
 #include <maqturing.h>
 
+#include <iostream>
+#include <cstdlib>
+
 MaqTuring *maq = new MaqTuring();
 
 SecondWindow::SecondWindow(QWidget *parent) :
@@ -28,26 +31,35 @@ void SecondWindow::on_pushButton_Confirmar_clicked()
     QString estadoFin = ui->lineEdit_Est_Fin->text();
     QString transiciones = ui->lineEdit_Trans->text();
     QString palabraEnt = ui->lineEdit_Pal_Ent->text();
-    ui->textBrowser_Mostrar->setText(estadoIni+"\n"+estadoFin+"\n"+transiciones+"\n"+palabraEnt);
+    int numEst = 0;
+    std::string str;
+    QString numEstString;
+
 
     // VALIDACIONES
     bool validaIni = maq->validaEstado(estadoIni);
     bool validaFin = maq->validaEstado(estadoFin);
     //bool validaTrans = maq->validaEstado(transiciones);
-    if(!validaIni){
+    bool validaOrden = maq->ordenEstados(estadoIni,estadoFin);
+
+    //VALIDACION ESTADO INICIAL
+    if(!validaIni || !validaOrden){
         ui->label_Asterisco1->setVisible(true);
         ui->lineEdit_Est_Ini->setStyleSheet("border: 1px solid red");
     }else{
         ui->label_Asterisco1->setVisible(false);
         ui->lineEdit_Est_Ini->setStyleSheet(styleSheet());
     }
-    if(!validaFin){
+    //VALIDACION ESTADO FINAL
+    if(!validaFin || !validaOrden){
         ui->label_Asterisco2->setVisible(true);
         ui->lineEdit_Est_Fin->setStyleSheet("border: 1px solid red");
     }else{
         ui->label_Asterisco2->setVisible(false);
         ui->lineEdit_Est_Fin->setStyleSheet(styleSheet());
     }
+
+    //VALIDACION TRANSICIONES
     if(transiciones == ""){
         ui->label_Asterisco3->setVisible(true);
         ui->lineEdit_Trans->setStyleSheet("border: 1px solid red");
@@ -55,6 +67,8 @@ void SecondWindow::on_pushButton_Confirmar_clicked()
         ui->label_Asterisco3->setVisible(false);
         ui->lineEdit_Trans->setStyleSheet(styleSheet());
     }
+
+    //VALIDACION PALABRA DE ENTRADA
     if(palabraEnt == ""){
         ui->label_Asterisco4->setVisible(true);
         ui->lineEdit_Pal_Ent->setStyleSheet("border: 1px solid red");
@@ -63,4 +77,16 @@ void SecondWindow::on_pushButton_Confirmar_clicked()
         ui->lineEdit_Pal_Ent->setStyleSheet(styleSheet());
     }
 
+    if(validaFin && validaIni && validaOrden){
+        numEst = maq->calculaNumEst(estadoIni,estadoFin);
+        str = std::to_string(numEst);
+        numEstString = QString::fromStdString(str);
+    }
+    //std::cout<<numEst<< std::endl;
+    ui->textBrowser_Mostrar->setText("Estado Inicial: "+estadoIni+"\n"+
+                                     "Estado Final: "+estadoFin+"\n"+
+                                     "Transiciones: "+transiciones+"\n"+
+                                     "Palabra de Entrada: "+palabraEnt+"\n"+
+                                     "Numero de estados: "+numEstString);
 }
+

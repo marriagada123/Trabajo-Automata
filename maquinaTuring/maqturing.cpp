@@ -32,3 +32,24 @@ bool MaqTuring::validaEstado(QString estado){
     }
 }
 
+int MaqTuring::calculaNumEst(QString estIni, QString estFin){
+    int EI = atoi(estIni.toStdString().c_str());
+    int EF = atoi(estFin.toStdString().c_str());
+    int numEstados = EF - EI + 1;
+    //std::cout<<numEstados<<std::endl;
+    return numEstados;
+}
+
+bool MaqTuring::ordenEstados(QString estIni, QString estFin){
+    int EI = atoi(estIni.toStdString().c_str());
+    int EF = atoi(estFin.toStdString().c_str());
+    bool estVal = true;
+    if(EF <= EI || estIni == ""){
+        estVal = false;
+        //std::cout<<estVal+ " hh"<<std::endl;
+        return estVal;
+    }else{
+        //std::cout<<estVal+ "gg "<<std::endl;
+        return estVal;
+    }
+}

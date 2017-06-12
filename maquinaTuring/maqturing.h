@@ -16,6 +16,8 @@ protected:
 public:
     MaqTuring(){inicio=0;}
     bool validaEstado(QString estado);
+    int calculaNumEst(QString estIni, QString estFin);
+    bool ordenEstados(QString estIni, QString estFin);
 };
 
 #endif // MAQTURING_H
