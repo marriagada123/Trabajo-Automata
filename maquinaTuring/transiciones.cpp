@@ -1,7 +1,9 @@
 #include "transiciones.h"
 #include <iostream>
 
-
+/*
+ * metodo para insertar nodos a la lista
+ */
 void Transiciones::inserta(QString estQ, QString simQ, QString estP, QString simP, QString direc){
     Nodo2 *nuevo = new Nodo2();
     nuevo->estadoQ = estQ;
@@ -23,7 +25,7 @@ void Transiciones::inserta(QString estQ, QString simQ, QString estP, QString sim
         aux->siguiente = nuevo;
     }
 }
-
+/*imprime los datos de un nodo*/
 QString Transiciones::imprimeTrans(void){
     QString datos = "";
     Nodo2* aux = inicio;
@@ -39,6 +41,8 @@ QString Transiciones::imprimeTrans(void){
     }
     return datos;
 }
+/*
+ * verifica que las transiciones no esten repetidas*/
 bool Transiciones::verificaIngresoTran(QString estQ, QString simQ){
     Nodo2* aux = inicio;
     while (aux) {
@@ -46,12 +50,16 @@ bool Transiciones::verificaIngresoTran(QString estQ, QString simQ){
         else aux = aux->siguiente;
     }
     if(aux){
-        std::cout << "esta transicion ya esta definida" << std::endl;
+        //std::cout << "esta transicion ya esta definida" << std::endl;
         return false;
     }else{
         return true;
     }
 }
+/*
+ * metodo usado para que identificar el lenguaje de la cinta
+ * se usa para crear la cabecera de la tabla
+ **/
 QString Transiciones::lenguaje(void){
     Nodo2* aux = inicio;
     Nodo2* aux2 = aux->siguiente;

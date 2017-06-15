@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>imagenes.qrc</file>
+        <file>fondo.jpg</file>
+        <file>icono.jpg</file>
+        <file>loco wash.png</file>
+    </qresource>
+</RCC>

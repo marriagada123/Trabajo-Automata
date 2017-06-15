@@ -6,6 +6,9 @@
 #include <transiciones.h>
 #include <QDebug>
 
+/*
+ * metodo que valida que lo ingresado como estado solo sean numeros, retornando un valor booleano
+ */
 bool MaqTuring::validaEstado(QString estado){
     int largoEst = estado.length();
     const char *pal = estado.toStdString().c_str();
@@ -32,7 +35,9 @@ bool MaqTuring::validaEstado(QString estado){
         return true;
     }
 }
-
+/*
+ * metodo que es utilizado al ingresar las transiciones, para validar que los estados esten dentro del rango que designamos
+ */
 bool MaqTuring::valEstActSig(QString estIni, QString estFin, QString estActual){
     bool valida_estActual = validaEstado(estActual);
     if(!valida_estActual){
@@ -48,6 +53,9 @@ bool MaqTuring::valEstActSig(QString estIni, QString estFin, QString estActual){
     }
     return true;
 }
+/*
+ * metodo que valida la direccion, que solo se pueda ingresar D o I. d o i
+ */
 bool MaqTuring::validaDireccion(QString direc){
     if(direc == "I" || direc == "D" || direc == "d" || direc == "i"){
         //std::cout << "es una direccion valida"<<std::endl;
@@ -57,6 +65,9 @@ bool MaqTuring::validaDireccion(QString direc){
         return false;
     }
 }
+/*
+ * este metodo solo valida que los simboloes tengan largo 1
+ */
 bool MaqTuring::validaSimbolo(QString simbolo){
     int largoSim = simbolo.length();
     if(largoSim != 1){
@@ -67,7 +78,9 @@ bool MaqTuring::validaSimbolo(QString simbolo){
         return true;
     }
 }
-
+/*
+ * metodo que calcula el numero total de estado, tomando el estado final e inicial
+ */
 int MaqTuring::calculaNumEst(QString estIni, QString estFin){
     int EI = atoi(estIni.toStdString().c_str());
     int EF = atoi(estFin.toStdString().c_str());
@@ -76,19 +89,26 @@ int MaqTuring::calculaNumEst(QString estIni, QString estFin){
     return numEstados;
 }
 
+/*
+ * metodo que obliga a que el estado inicial ingresado sea menor al estado final
+ */
 bool MaqTuring::ordenEstados(QString estIni, QString estFin){
     int EI = atoi(estIni.toStdString().c_str());
     int EF = atoi(estFin.toStdString().c_str());
     bool estVal = true;
     if(EF <= EI || estIni == ""){
         estVal = false;
-        //std::cout<<estVal+ " hh"<<std::endl;
+        //std::cout<<estVal<<std::endl;
         return estVal;
     }else{
-        //std::cout<<estVal+ "gg "<<std::endl;
+        //std::cout<<estVal<<std::endl;
         return estVal;
     }
 }
+
+/*
+ * metodo encargado de crear la lista doblemente enlazada que guardara la palabra de entrada a evaluar
+ */
 void MaqTuring::inserta(QString simbolo,QString estIni){
     Nodo1 *nuevo = new Nodo1();
     nuevo->simbolo = simbolo;
@@ -121,6 +141,9 @@ void MaqTuring::inserta(QString simbolo,QString estIni){
     }
 }
 
+/*
+ * metodo que imprime las palabra, usado para probar los metodos
+ */
 QString MaqTuring::imprimePalabra(void){
     QString datos = "";
     Nodo1* aux=inicio;
@@ -132,75 +155,38 @@ QString MaqTuring::imprimePalabra(void){
     }
     return datos;
 }
+/*
+ * metodo que verifica si la palabra pertenece al lenguaje, moviendo punteros en una lista doblemente enlazada
+ * en esta lista se encuentra la palabra, para comparar con las transiciones se usa una lista enlazada simple
+ * se comparan ambas listas
+ */
 bool MaqTuring::verificarPalabra(Transiciones* tran, QString estFinal){
     Nodo2* aux2 = tran->inicio;
     Nodo1* aux1 = inicio;
-    QString a = aux1->estado;
-    QString b = aux1->simbolo;
-    QString c = aux2->estadoQ;
-    QString d = aux2->simboloQ;
     QString EF = estFinal;
-    std::cout<<EF.toStdString()<<std::endl;
-    std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
     while(aux1){
-        std::cout<<"2"<<std::endl;
-        std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
         aux2 = tran->inicio;
-        std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
         if(aux1->estado != estFinal){
-            std::cout<<"3"<<std::endl;
-            std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
-
-
-
-            while ((aux1->estado != aux2->estadoQ || aux1->simbolo != aux2->simboloQ) && aux2 != 0) {
-                std::cout<<"4"<<std::endl;
-                std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
+            while (aux1->estado != aux2->estadoQ || aux1->simbolo != aux2->simboloQ) {
                 aux2 = aux2->siguiente;
-                if(aux2->estadoP != EF){
-                    return true;
-                    std::cout<<"dddddd"+aux2->estadoP.toStdString()<<std::endl;
-                }else{
-                    std::cout<<"aaaaa"<<std::endl;
+                if(aux2 == 0){
                     return false;
                 }
             }
-
-
-
-            std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
-            if(aux2 == 0){
-                return false;
-                std::cout<<"5"<<std::endl;
-                std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
+            if(aux2->estadoP == EF){
+                return true;
             }
-            std::cout<<"6"<<std::endl;
-            std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
-            aux1->simbolo = aux2->simboloP;
-            std::cout<<"7"<<std::endl;
-            std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
+           aux1->simbolo = aux2->simboloP;
             if(aux2->direccion == "D" || aux2->direccion == "d"){
-                std::cout<<"8"<<std::endl;
-                std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
                 aux1 = aux1->siguiente;
             }else{
-                std::cout<<"9"<<std::endl;
-                std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
                 aux1 = aux1->anterior;
             }
-            std::cout<<"10"<<std::endl;
-            std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
             aux1->estado = aux2->estadoP;
 
 
         }else{
-            std::cout<<"11"<<std::endl;
-            std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
             return true;
         }
-        std::cout<<"12"<<std::endl;
-        std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
     }
-    std::cout<<"13"<<std::endl;
-    std::cout<<aux1->estado.toStdString()+","+aux1->simbolo.toStdString()+","+aux2->estadoQ.toStdString()+","+aux2->simboloQ.toStdString()<<std::endl;
 }

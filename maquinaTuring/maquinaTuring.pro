@@ -39,3 +39,6 @@ HEADERS += \
 FORMS += \
         mainwindow.ui \
     secondwindow.ui
+
+RESOURCES += \
+    imagenes.qrc

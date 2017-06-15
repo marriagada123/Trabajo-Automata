@@ -25,7 +25,6 @@ private slots:
 private:
     Ui::SecondWindow *ui;
     int fila;
-    bool transCorrecta;
     bool tablaGenerada;
     int numeroEstado;
     int estadoInicial;

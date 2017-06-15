@@ -29,8 +29,12 @@ SecondWindow::~SecondWindow()
     delete ui;
 }
 
+/*
+ * metodo del boton confirmar que genera la lista doblemente enlazada donde ira la palabra
+ */
 void SecondWindow::on_pushButton_Confirmar_clicked()
 {
+    MaqTuring *maq2 = new MaqTuring();
     QString palabra = ui->lineEdit_Pal_Ent->text();
     QString estado = ui->lineEdit_Trans_1->text();
     std::string str;
@@ -42,27 +46,25 @@ void SecondWindow::on_pushButton_Confirmar_clicked()
     QString estStringF = QString::fromStdString(strf);
 
     int largoPalabra = palabra.length();
+    //delete[] maq;
     QString sim = "";
     for(int i = 0; i < largoPalabra; i++){
         sim = palabra[i];
-        maq->inserta(sim,estString);
+        maq2->inserta(sim,estString);
     }
-    QString pal = maq->imprimePalabra();
+    QString pal = maq2->imprimePalabra();
     ui->textBrowser_Mostrar->setText(pal);
-    std::cout<<"1"<<std::endl;
-    if(maq->verificarPalabra(tran,estStringF)){
-        std::cout<<"palabra aceptada"<<std::endl;
+    if(maq2->verificarPalabra(tran,estStringF)){
+        ui->textBrowser_Mostrar->setText("palabra aceptada");
     }else{
-        std::cout<<"palabra rechazada"<<std::endl;
+        ui->textBrowser_Mostrar->setText("palabra rechazada");
     }
-//    qDebug()<<simbolosTrans;
 
 }
 
-
-
-
-
+/*
+ *en este metodo genera la lista enlazada con las transiciones ademas crea la tabla donde se muestras dichas transiciones
+ */
 void SecondWindow::on_pushButton_inserta_clicked()
 {
     QString estadoIni = ui->lineEdit_Est_Ini->text();
@@ -106,51 +108,31 @@ void SecondWindow::on_pushButton_inserta_clicked()
     }
 
     //VALIDACION TRANSICIONES
-    if(!validaTrans1 || !verifica){
-        ui->label_Asterisco3->setVisible(true);
+    if(!validaTrans1 || !verifica){        
         ui->lineEdit_Trans_1->setStyleSheet("border: 1px solid red");
     }else{
-        ui->label_Asterisco3->setVisible(false);
         ui->lineEdit_Trans_1->setStyleSheet(styleSheet());
     }
     if(!validaTrans2 || !verifica){
-        ui->label_Asterisco3->setVisible(true);
         ui->lineEdit_Trans_2->setStyleSheet("border: 1px solid red");
     }else{
-        ui->label_Asterisco3->setVisible(false);
         ui->lineEdit_Trans_2->setStyleSheet(styleSheet());
     }
     if(!validaTrans3){
-        ui->label_Asterisco3->setVisible(true);
         ui->lineEdit_Trans_3->setStyleSheet("border: 1px solid red");
     }else{
-        ui->label_Asterisco3->setVisible(false);
         ui->lineEdit_Trans_3->setStyleSheet(styleSheet());
     }
     if(!validaTrans4){
-        ui->label_Asterisco3->setVisible(true);
         ui->lineEdit_Trans_4->setStyleSheet("border: 1px solid red");
     }else{
-        ui->label_Asterisco3->setVisible(false);
         ui->lineEdit_Trans_4->setStyleSheet(styleSheet());
     }
     if(!validaTrans5){
-        ui->label_Asterisco3->setVisible(true);
         ui->lineEdit_Trans_5->setStyleSheet("border: 1px solid red");
     }else{
-        ui->label_Asterisco3->setVisible(false);
         ui->lineEdit_Trans_5->setStyleSheet(styleSheet());
     }
-
-    //VALIDACION PALABRA DE ENTRADA
-    if(palabraEnt == ""){
-        ui->label_Asterisco4->setVisible(true);
-        ui->lineEdit_Pal_Ent->setStyleSheet("border: 1px solid red");
-    }else{
-        ui->label_Asterisco4->setVisible(false);
-        ui->lineEdit_Pal_Ent->setStyleSheet(styleSheet());
-    }
-
     if(validaFin && validaIni && validaOrden){
         numEst = maq->calculaNumEst(estadoIni,estadoFin);
         numeroEstado = numEst;
@@ -158,8 +140,9 @@ void SecondWindow::on_pushButton_inserta_clicked()
         numEstString = QString::fromStdString(str);
     }
     //INSERTA NODO DE TRANSICION
+    //
     if(validaIni && validaFin && validaOrden && validaTrans1 && validaTrans2 && validaTrans3 && validaTrans4 && validaTrans5 && verifica){
-        transCorrecta = true;
+        ui->label_Asterisco3->setVisible(false);
         estadoInicial = atoi(estadoIni.toStdString().c_str());
         estadoFinal = atoi(estadoFin.toStdString().c_str());
 
@@ -178,7 +161,6 @@ void SecondWindow::on_pushButton_inserta_clicked()
             aux2 = leng[i];
             aux.append(aux2);
         }
-        //maq->verificarPalabra(tran);
         //genera columna principal
         ui->tableWidget_datos->setColumnCount(aux.size());
         ui->tableWidget_datos->setHorizontalHeaderLabels(aux);
@@ -186,7 +168,6 @@ void SecondWindow::on_pushButton_inserta_clicked()
 
         int auxIni = estadoInicial;
         //genera filas con todos los estados
-        //int a = ui->tableWidget_datos->rowCount();
         if(ui->tableWidget_datos->rowCount() == 0){
             for(int i = 0; i < numeroEstado;i++){
                 str = std::to_string(auxIni);
@@ -205,7 +186,7 @@ void SecondWindow::on_pushButton_inserta_clicked()
         for(int i = estadoInicial ; i <= estadoFinal; i++){
             str = std::to_string(i);
             numEstString = QString::fromStdString(str);
-            stringEstado+=numEstString;
+            stringEstado += numEstString;
         }
         //identifica en que fila se ingresara el dato
         int cont2 = 0;
@@ -213,15 +194,10 @@ void SecondWindow::on_pushButton_inserta_clicked()
             cont2++;
         }
         QString transi = "( "+estadoP+" , "+simboloP+" , "+direccion+" )";
-
-        qDebug()<<stringEstado;
-        qDebug()<<cont2;
         ui->tableWidget_datos->setItem(cont2,cont+1,new QTableWidgetItem(transi));
-
     }else{
-        transCorrecta = false;
+        ui->label_Asterisco3->setVisible(true);
         estadoInicial = 0;
         estadoFinal = 0;
     }
-
 }
