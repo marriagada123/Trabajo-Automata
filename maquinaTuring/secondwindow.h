@@ -2,6 +2,8 @@
 #define SECONDWINDOW_H
 
 #include <QMainWindow>
+#include <QTableWidgetItem>
+#include <QStringList>
 
 namespace Ui {
 class SecondWindow;
@@ -18,8 +20,18 @@ public:
 private slots:
     void on_pushButton_Confirmar_clicked();
 
+    void on_pushButton_inserta_clicked();
+
 private:
     Ui::SecondWindow *ui;
+    int fila;
+    bool transCorrecta;
+    bool tablaGenerada;
+    int numeroEstado;
+    int estadoInicial;
+    int estadoFinal;
+    QString header;
+    QStringList header2;
 };
 
 #endif // SECONDWINDOW_H

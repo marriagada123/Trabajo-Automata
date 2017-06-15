@@ -27,12 +27,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     maqturing.cpp \
-    secondwindow.cpp
+    secondwindow.cpp \
+    transiciones.cpp
 
 HEADERS += \
         mainwindow.h \
     maqturing.h \
-    secondwindow.h
+    secondwindow.h \
+    transiciones.h
 
 FORMS += \
         mainwindow.ui \
